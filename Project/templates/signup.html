@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+</head>
+<body>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-popup flash-message {{messages[-1][0]}}">
+                    {{ messages[-1][1] }} </div>
+                <script>
+                    setTimeout(function () {
+                            var flashMessage = document.querySelector('.flash-popup');
+                            if (flashMessage) {
+                                flashMessage.remove();
+                            }
+                        }, 5000)
+                </script>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="signup">
+                <h3>User signup</h3>
+                <div>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button>signup</button>
+
+                <div>
+                    <a href="login">Already Registered! Click here</a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</body>
+</html>
