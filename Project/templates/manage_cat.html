@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Categories</title>
+</head>
+<body>
+    <div>
+        <div>
+            <h2>Create Category</h2>
+            <form method="POST" action="{{ url_for('main.manage_cat') }}">
+                <input type="text" name="create_category" placeholder = 'Enter Category Name' required>
+                <button type="submit">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <h1>Existing categories</h1>
+    <input type="text" id="search-bar" placeholder="Search Categories">
+
+    <div>
+        {% if categories %}
+        {% for category in categories %}
+        <div class="category-item">
+            <h3 class="category-name">{{ category.name }}</h3>
+            <form method="POST" action="{{ url_for('main.manage_cat')}}">
+                <input type="hidden" name="category_id" value="{{ category.id }}">
+                
+                <input type="text" name="new_category_name" value="{{ category.name }}" required>
+                <button name="update_category" type="submit">
+                    Edit
+                </button>
+            </form>
+
+            <form method="POST" action="{{ url_for('main.manage_cat')}}">
+                <input type="hidden" name="category_id" value="{{ category.id }}">
+                <button name="remove_category" type="submit">
+                    Delete
+                </button>
+            </form>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No categories available.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('search-bar').addEventListener('input',function(){
+            let filter = this.value.toLowerCase();
+            let categoryItems = document.querySelectorAll('.category-item')
+            categoryItems.forEach(item => {
+                let categoryName = item.querySelector('.category-name').textContent.toLowerCase();
+                if (categoryName.includes(filter)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            })
+        })
+    </script>
+</body>
+</html>
